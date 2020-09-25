@@ -1,0 +1,20 @@
+.body{
+  display : grid;
+  place-items : center;
+  background-color : #dadbd3;
+  height : 93vh;
+}
+
+.form{
+  background-color : #2C2F33;
+  padding : 30px;
+  border-radius: 10px 10px 10px 10px;
+  -moz-border-radius: 10px 10px 10px 10px;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  border: 1px solid #000000;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.8);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.8);
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.8);
+  color : #DCDDDE;
+  min-width: 30%;
+}
