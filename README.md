@@ -8,7 +8,7 @@ docker-compose up -d
 docker-compose run web python manage.py migrate
 ```
 
-Run the API from root directory :
+Run the client from root directory :
 ```
 cd frontend
 docker-compose up -d
