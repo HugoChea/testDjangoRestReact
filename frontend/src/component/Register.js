@@ -1,18 +1,31 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { register } from './api/calls';
 
-function Register() {
 
+function Register() {
+    
     const [username, setusername] = useState("")
     const [password, setpassword] = useState("")
     const [email, setemail] = useState("")
+    const [validated, setvalidated] = useState(null)
+    const [error, seterror] = useState(null)
 
     const handleSubmit = (event) => {
-        console.log(email)
-        register({username: username, email : email, password : password})
+        event.preventDefault();
+        seterror(null)
+        setvalidated(null)
+        register({username: username, email : email, password : password}, (res) => {
+            console.log(res)
+            setvalidated(res.status)
+        },(err) =>{
+            console.log(err)
+            seterror(err)
+        })
+        
+        //history.push("/login");
         //const form = event.currentTarget;
         //if (form.checkValidity() === false) {
         //  event.preventDefault();
@@ -37,14 +50,15 @@ function Register() {
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Mot de passe</Form.Label>
-                        <Form.Control required type="password" minLength= "6" name="password" value={password} onChange={e => setpassword(e.target.value)} className="form-control form-sign" id="password" placeholder="Votre mot de passe"/>
+                        <Form.Control required type="password" minLength= "4" name="password" value={password} onChange={e => setpassword(e.target.value)} className="form-control form-sign" id="password" placeholder="Votre mot de passe"/>
                     </Form.Group>
                     <div className="text-center">
                         <Button onClick={handleSubmit} variant="primary">Se connecter</Button>
                     </div>
                     <br></br>
                     
-                    {"error && <p>{error.message}</p>"}
+                    {error && <p className="alert alert-danger">{error}</p>}
+                    {validated && <p className="alert alert-success">{validated}</p>}
                 </Form>
             </div>
         </Container>

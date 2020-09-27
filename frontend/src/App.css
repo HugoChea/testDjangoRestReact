@@ -16,5 +16,5 @@
   -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.8);
   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.8);
   color : #DCDDDE;
-  min-width: 30%;
+  width : 25vw;
 }

@@ -1,30 +1,48 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import Button from 'react-bootstrap/Button';
 import * as ROUTES from '../const/routes';
+import { actionTypes } from '../reducer';
+import { useGlobalState } from "../StateProvider";
 
 function Navigation() {
+    const [{user}, dispatch] = useGlobalState()
+
+    const logout = (event) => {
+        //event.preventDefault();
+        localStorage.removeItem('authUser');
+        window.location.href = '/';
+    };
+
+    useEffect(() => {
+        if (localStorage.getItem(('authUser'))){
+            const data = JSON.parse(localStorage.getItem('authUser'));
+            dispatch({
+                type: actionTypes.SET_USER,
+                user: data
+            })
+        }
+        
+        return () => {
+            
+        }
+    }, user)
+
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-            <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+            <Navbar.Brand href={ROUTES.HOME}>React-Bootstrap</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
-                <Nav className="mr-auto">
-                <Nav.Link href="#features">Features</Nav.Link>
-                <Nav.Link href="#pricing">Pricing</Nav.Link>
-                <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                    <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                </NavDropdown>
-                </Nav>
-                <Nav>
-                <Nav.Link href={ROUTES.REGISTER}>Register</Nav.Link>
-                <Nav.Link href={ROUTES.LOGIN}>Login</Nav.Link>
-                </Nav>
+                {!user &&
+                    <Nav>
+                        <Nav.Link href={ROUTES.REGISTER}>Register</Nav.Link>
+                        <Nav.Link href={ROUTES.LOGIN}>Login</Nav.Link>
+                    </Nav>
+                }
+                {user &&
+                    <Button onClick={logout} variant="dark" > Logout </Button>
+                }
             </Navbar.Collapse>
             </Navbar>
     )
