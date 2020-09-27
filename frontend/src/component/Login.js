@@ -15,22 +15,33 @@ function Login() {
     const [password, setpassword] = useState("")
     const [email, setemail] = useState("")
     const [{user}, dispatch] = useGlobalState()
+    const [success, setsuccess] = useState(false)
+    const [error, seterror] = useState(null)
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        login({username: username, password : password}, (res) => {
-            console.log(res)
-            dispatch({
-                type: actionTypes.SET_USER,
-                user: res
+        if (username.length > 0 && password.length > 0){
+            login({username: username, password : password}, (res) => {
+                console.log(res)
+                dispatch({
+                    type: actionTypes.SET_USER,
+                    user: res
+                })
+                setsuccess(true)
+            },(err) =>{
+                console.log(err)
+                seterror(err)
+                
             })
-            
-        },(err) =>{
-            console.log(err)
-            
-        })
-
-        history.push("/");
+    
+            if(success === true){
+                history.push("/");
+            }
+        }
+        else{
+            seterror("Des champs sont vides")
+        }
+        
 
     };
 
@@ -45,14 +56,14 @@ function Login() {
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Mot de passe</Form.Label>
-                        <Form.Control required type="password" name="password" value={password} onChange={e => setpassword(e.target.value)} className="form-control form-sign" id="password" placeholder="Votre mot de passe"/>
+                        <Form.Control required type="password" name="password" minLength= "1" value={password} onChange={e => setpassword(e.target.value)} className="form-control form-sign" id="password" placeholder="Votre mot de passe"/>
                     </Form.Group>
                     <div className="text-center">
                         <Button onClick={handleSubmit} variant="primary" type="submit">Se connecter</Button>
                     </div>
                     <br></br>
                     
-                    {"error && <p>{error.message}</p>"}
+                    {error && <p className="alert alert-danger">{error}</p>}
                 </Form>
             </div>
         </Container>

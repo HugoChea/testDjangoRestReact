@@ -42,8 +42,8 @@ export function login(data, callback, errorcallback){
   })
   .catch(err => {
     // catch error
-    console.log("error : " + err.response.data.error)
-    errorcallback(err.response.data.error)
+    console.log("error : " + err.response.data.non_field_errors)
+    errorcallback(err.response.data.non_field_errors[0])
   })
 }
 
