@@ -11,12 +11,6 @@ from rest_framework.authtoken.models import Token
 from rest_framework import serializers
 from django.core.exceptions import ObjectDoesNotExist
 
-class HelloView(APIView):
-    permission_classes = (IsAuthenticated,)
-
-    def get(self, request):
-        content = {'message': 'Hello, World!'}
-        return Response(content)
 
 class Register(APIView):
 
@@ -82,15 +76,16 @@ class Login(ObtainAuthToken):
         token, created = Token.objects.get_or_create(user=user)
         return Response({
             'token': token.key,
-            'user_id': user.pk,
+            'id': user.pk,
             'username': user.username,
             'email' : user.email,
         })
 
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'password', 'email']
+        fields = ['id', 'username', 'email']
 
 class UserProfile(APIView) : 
     permission_classes = (IsAuthenticated,)
@@ -108,6 +103,3 @@ class UserProfile(APIView) :
             return Response({'error': str(e)}, status=status.HTTP_404_NOT_FOUND)
         except Exception as ex:
             return Response({'error': 'Something terrible went wrong' + str(ex)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-            
-

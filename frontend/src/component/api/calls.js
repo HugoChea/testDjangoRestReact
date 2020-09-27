@@ -48,11 +48,13 @@ export function login(data, callback, errorcallback){
 }
 
 export function updateUserMail(data, callback, errorcallback){
-  axios.put(`${API_ROUTE}update/user/${data.user_id}`, 
+  axios.put(`${API_ROUTE}update/user/${data.id}`, 
   {
-      "email" : data.username,
+      "email" : data.email,
   },
-  { "Authorization" : `Token ${ localStorage.getItem("token")}` }
+  {headers : { 
+    Authorization: `Token ${ data.token}`
+  }}
   )
   .then(response => {
     //do something
@@ -60,7 +62,9 @@ export function updateUserMail(data, callback, errorcallback){
     if(response.status === 200){
       console.log(response.data)
       callback(response.data);
-      localStorage.setItem('authUser',  JSON.stringify(response.data));
+      let user = response.data.user
+      user.token = data.token
+      localStorage.setItem('authUser',  JSON.stringify(user));
     }
   })
   .catch(err => {
