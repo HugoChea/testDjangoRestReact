@@ -49,7 +49,7 @@ function Login() {
                 <h1>Se connecter</h1>
                     <Form.Group>
                         <Form.Label>Username</Form.Label>
-                        <Form.Control required type="email" name="email" value={username} onChange={e => setusername(e.target.value)} className="form-control form-sign" id="email" aria-describedby="emailHelp" placeholder="Votre email"/>
+                        <Form.Control required type="email" name="email" value={username} onChange={e => setusername(e.target.value)} className="form-control form-sign" id="email" aria-describedby="emailHelp" placeholder="Votre username"/>
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Mot de passe</Form.Label>
