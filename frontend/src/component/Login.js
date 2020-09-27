@@ -15,7 +15,6 @@ function Login() {
     const [password, setpassword] = useState("")
     const [email, setemail] = useState("")
     const [{user}, dispatch] = useGlobalState()
-    const [success, setsuccess] = useState(false)
     const [error, seterror] = useState(null)
 
     const handleSubmit = (event) => {
@@ -27,16 +26,14 @@ function Login() {
                     type: actionTypes.SET_USER,
                     user: res
                 })
-                setsuccess(true)
+                
+                history.push("/");
             },(err) =>{
                 console.log(err)
                 seterror(err)
                 
             })
-    
-            if(success === true){
-                history.push("/");
-            }
+            
         }
         else{
             seterror("Des champs sont vides")
