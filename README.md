@@ -5,7 +5,7 @@ Run the API from root directory :
 ```
 cd backend
 docker-compose up -d
-
+docker-compose run web python manage.py migrate
 ```
 
 Run the API from root directory :
